@@ -43,13 +43,30 @@ void UnawareBST::Insert(int v)
 }
 
 // Private recursive method to print the tree
-void UnawareBST::AuxPrint(Node * r) {//Inorder
+void UnawareBST::AuxPrint(Node * r) {//Preorder
 	if (r == 0)return;
 	else {
-		AuxPrint(r->left);
 		cout << r->val << " ";
+		AuxPrint(r->left);
 		AuxPrint(r->right);
 	}
+}
+
+void UnawareBST::AuxGetSize(Node * r, int &size)
+{
+	if (r == 0)return;
+	else {
+		size++;
+		AuxGetSize(r->left, size);
+		AuxGetSize(r->right, size);
+	}
+}
+
+int UnawareBST::GetSize()
+{
+	int size = 0; 
+	AuxGetSize(root, size);
+	return size;
 }
 
 //Public print method
@@ -110,7 +127,7 @@ void UnawareBST::AuxDelete(Node *&r, int v)
 					}
 					// we have a left node so
 					while (ptr->left != 0) {// and then go left as far as you can go
-						//follower = ptr;
+						follower = ptr;
 						ptr = ptr->left;
 					}
 					// Ptr points to successor. 

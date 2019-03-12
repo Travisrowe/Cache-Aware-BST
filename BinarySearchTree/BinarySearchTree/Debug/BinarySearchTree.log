@@ -1,6 +1,2 @@
-﻿  AwareBST.cpp
-c:\users\travis\documents\school_related\cache-aware-bst\binarysearchtree\binarysearchtree\awarebst.cpp(30): error C2065: 'null': undeclared identifier
-c:\users\travis\documents\school_related\cache-aware-bst\binarysearchtree\binarysearchtree\awarebst.cpp(31): error C2059: syntax error: '}'
-  ANode.cpp
-  Main.cpp
-  Generating Code...
+﻿  Main.cpp
+  BinarySearchTree.vcxproj -> C:\Users\Travis\Documents\School_Related\Cache-Aware-BST\BinarySearchTree\Debug\BinarySearchTree.exe

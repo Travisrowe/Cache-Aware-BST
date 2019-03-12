@@ -19,6 +19,7 @@ class UnawareBST
 	Node * root;
 	void AuxInsert(Node *&, int);
 	void AuxDelete(Node *&, int);
+	void AuxGetSize(Node *, int&);
 	void AuxPrint(Node *);
 	void RemoveTree(Node *& r);
 
@@ -27,6 +28,7 @@ public:
 	~UnawareBST(void);//Desructor
 	void Insert(int v);//Insert v into the tree
 	void Delete(int val);//Delete val from the tree
+	int GetSize();
 	int Sum();//Return the sum of the values in the tree.
 	void Print();//Can you change this to have a parameter
 				 // Print(PREORDER), Print(INORDER) and Print(Postorder) ?
