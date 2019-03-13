@@ -1,0 +1,3 @@
+ 1112808000 AT Time
+ 724874 UT Time
+ The Aware Tree took 1535 times as long as the UT Tree!
