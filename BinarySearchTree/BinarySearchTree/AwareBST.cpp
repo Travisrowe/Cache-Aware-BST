@@ -8,9 +8,15 @@ void AwareBST::AuxDelete(int &index, int v)
 	else
 	{
 		if (v > vec[index].val)
+		{
 			AuxDelete(vec[index].rightChild, v);
+			return; //returning here keeps us from decrementing size more than once per delete
+		}
 		else if (v < vec[index].val)
+		{
 			AuxDelete(vec[index].leftChild, v);
+			return;
+		}
 		else // we have found the node to delete
 		{
 			if (vec[index].leftChild == vec[index].rightChild == -1)
@@ -46,7 +52,6 @@ void AwareBST::AuxDelete(int &index, int v)
 						DeleteNode(index);
 						//update index of parent's child to successor
 						index = leaderInd;
-						return;
 					}
 					else
 					{
@@ -68,18 +73,7 @@ void AwareBST::AuxDelete(int &index, int v)
 			}
 		}
 	}
-}
-
-void AwareBST::AuxGetSize(int index, int& size)
-{
-	if (index == -1) //reached end of branch
-		return;
-	else
-	{
-		size++;
-		AuxGetSize(vec[index].leftChild, size);
-		AuxGetSize(vec[index].rightChild, size);
-	}
+	size--;
 }
 
 //index starts at 0
@@ -119,6 +113,7 @@ void AwareBST::AuxInsert(int v, int index)
 		}
 	}
 	//val has been inserted, update freeIndex
+	size++;
 	UpdateFreeIndex();
 }
 
@@ -159,8 +154,6 @@ void AwareBST::DeleteNode(int index)
 
 int AwareBST::GetSize()
 {
-	int size = 0;
-	AuxGetSize(root, size);
 	return size;
 }
 
@@ -187,6 +180,12 @@ void AwareBST::PrintVec()
 //increment freeIndex until we find a node of -1
 void AwareBST::UpdateFreeIndex()
 {
-	while (freeIndex != vec.size() && vec[freeIndex].val != -1) //Null nodes have val of -1
-		freeIndex++;
+	if (size == vec.size()) //the number of nodes we have inserted is equal to the size of our memory unit
+	{
+		//therefore, freeIndex is out of bounds
+		freeIndex = size;
+	}
+	else //we have to find the freeIndex in O(n) time (although freeIndex is found in one iteration of the loop if we are only building the tree for the first time)
+		while (freeIndex != vec.size() && vec[freeIndex].val != -1) //Null nodes have val of -1
+			freeIndex++;
 }

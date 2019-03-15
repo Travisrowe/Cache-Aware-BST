@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <time.h>
 #include <iostream>
+#include <Windows.h> //for sleep
 //chrono used for time measurements
 #include <chrono> 
 using namespace std::chrono;
@@ -13,11 +14,13 @@ using namespace std::chrono;
 //12 bytes per Node
 // 524,288 / 12 = 43,690 Nodes
 
-#define NUM_NODES 43690 //number of nodes
-#define ID_PAIRS 100000 //number of insert/delete pairs
+#define NUM_NODES 256 //number of nodes
+#define ID_PAIRS 1000000 //number of insert/delete pairs
 #define SEED 99
 //#define DEBUG true
+#define TIME_TEST true
 //#define FIND_SEED true
+//#define TIME_TEST_NO_VECS true
 
 //swap index a with index b inside vect
 void Swap(vector<int> &vect, int a, int b)
@@ -29,6 +32,7 @@ void Swap(vector<int> &vect, int a, int b)
 
 int main()
 {
+	srand(SEED);
 #ifdef FIND_SEED
 	int closestVal = NUM_NODES;
 	int closestSeed;
@@ -46,8 +50,6 @@ int main()
 #endif // SEED
 
 #ifdef DEBUG
-
-	srand(SEED);
 
 	AwareBST AT(NUM_NODES);
 	UnawareBST UT;
@@ -116,8 +118,11 @@ int main()
 	std::cout << "\nUT\n";
 	UT.Print();
 
-#else// Time-test program
-	srand(SEED);
+#endif //DEBUG
+#ifdef TIME_TEST
+
+
+	// Time-test program
 	
 	std::cout << "Let's begin!\n\n";
 	std::cout << "Generating initial values for trees and insert/delete pairs....\n";
@@ -141,74 +146,126 @@ int main()
 		treeVals[index] = InsertVals[i];
 	}
 	std::cout << "Finished generating random vals!\n";
-	std::cout << "Starting time for Control tree (Cache-unaware BST)....\n";
-
-	/****************************************************************************
-	 * Unaware BST timing *******************************************************
-	****************************************************************************/
-	auto start = high_resolution_clock::now(); //start time
-
-	UnawareBST UT;
-	//create initial tree
-	for (int i = 0; i < NUM_NODES; i++)
+	double durSumAT = 0;
+	double durSumUT = 0;
+	for (int j = 0; j < 10; j++)
 	{
-		UT.Insert(initialTreeVals[i]);
+		std::cout << "Starting time for Control tree (Cache-unaware BST)....\n";
+
+		/****************************************************************************
+		 * Unaware BST timing *******************************************************
+		****************************************************************************/
+		auto start = high_resolution_clock::now(); //start time
+
+		UnawareBST UT;
+		//create initial tree
+		for (int i = 0; i < NUM_NODES; i++)
+		{
+			UT.Insert(initialTreeVals[i]);
+		}
+		for (int i = 0; i < ID_PAIRS; i++)
+		{
+			//delete first, then insert
+			UT.Delete(DeleteVals[i]);
+			UT.Insert(InsertVals[i]);
+		}
+
+		auto stop = high_resolution_clock::now(); //stop time
+
+		// Subtract stop and start timepoints and 
+		// cast it to required unit. Predefined units 
+		// are nanoseconds, microseconds, milliseconds, 
+		// seconds, minutes, hours. Use duration_cast() 
+		// function. 
+		auto duration = duration_cast<microseconds>(stop - start);  //1 second is 1,000,000 microseconds (654,773 microseconds is .654 seconds)
+		durSumUT += duration.count();
+
+		// To get the value of duration use the count() 
+		// member function on the duration object 
+		cout << "Time for Control tree: " << duration.count() << " microseconds\n\n";
+
+		/****************************************************************************
+		 * Single Vector Aware BST timing *******************************************
+		****************************************************************************/
+		std::cout << "Starting time for single vector tree...\n";
+		auto start_AT = high_resolution_clock::now(); //start time
+
+		AwareBST AT(NUM_NODES);
+		//create initial tree
+		for (int i = 0; i < NUM_NODES; i++)
+		{
+			/*if (i % 1000 == 0)
+				cout << i << '\n';*/
+			AT.Insert(initialTreeVals[i]);
+		}
+		for (int i = 0; i < ID_PAIRS; i++)
+		{
+			/*if (i % 100 == 0)
+				cout << i << '\n';*/
+				//delete first, then insert
+			AT.Delete(DeleteVals[i]);
+			AT.Insert(InsertVals[i]);
+		}
+
+		auto stop_AT = high_resolution_clock::now(); //stop time
+
+		// Subtract stop and start timepoints and 
+		// cast it to required unit. Predefined units 
+		// are nanoseconds, microseconds, milliseconds, 
+		// seconds, minutes, hours. Use duration_cast() 
+		// function. 
+		auto duration_AT = duration_cast<microseconds>(stop_AT - start_AT);
+		durSumAT += duration_AT.count();
+
+		// To get the value of duration use the count() 
+		// member function on the duration object 
+		cout << "Time for Single-Vector, Aware tree: " << duration_AT.count() << " microseconds\n\n";
 	}
-	for (int i = 0; i < ID_PAIRS; i++)
+	cout << "Average time for Unaware tree over 10 iterations: " << durSumUT / 10 << " microseconds\n";
+	cout << "Average time for Aware tree over 10 iterations: " << durSumAT / 10 << " microseconds\n\n";
+#endif// TIME_TEST
+#ifdef TIME_TEST_NO_VECS
+	//this is a Time test where RNG values are inserted directly into trees. I.E. no additional vectors are used in main
+	//this means we only insert into the tree, as reliably deleting from tree seems to require additional vectors
+	bool UseAwareTree = false;
+	if (UseAwareTree)
 	{
-		//delete first, then insert
-		UT.Delete(DeleteVals[i]);
-		UT.Insert(InsertVals[i]);
+		//we test the aware tree and not the un-aware tree
+		double durationSum = 0;
+		AwareBST AT(NUM_NODES);
+		for (int i = 0; i < NUM_NODES; i++)
+		{
+			//generate val to insert, then start the time
+			int val = rand() % NUM_NODES;
+			auto start = high_resolution_clock::now(); //start time
+
+			//insert val
+			AT.Insert(val);
+			auto stop = high_resolution_clock::now(); //stop time
+			auto duration = duration_cast<microseconds>(stop - start); //1 second is 1,000,000 microseconds (654,773 microseconds is .654 seconds)
+			durationSum += duration.count();
+		}
+		std::cout << "Time to create Aware tree without the use of vectors in main: " << durationSum / 1000000 << " seconds\n\n";
 	}
-
-	auto stop = high_resolution_clock::now(); //stop time
-
-	// Subtract stop and start timepoints and 
-	// cast it to required unit. Predefined units 
-	// are nanoseconds, microseconds, milliseconds, 
-	// seconds, minutes, hours. Use duration_cast() 
-	// function. 
-	auto duration = duration_cast<microseconds>(stop - start);
-
-	// To get the value of duration use the count() 
-	// member function on the duration object 
-	cout << "Time for Control tree: " << duration.count() << "microseconds\n";
-
-	/****************************************************************************
-	 * Single Vector Aware BST timing *******************************************
-	****************************************************************************/
-	std::cout << "Starting time for single vector tree...\n";
-	auto start_AT = high_resolution_clock::now(); //start time
-
-	AwareBST AT(NUM_NODES);
-	//create initial tree
-	for (int i = 0; i < NUM_NODES; i++)
+	else
 	{
-		if (i % 1000 == 0)
-			cout << i << '\n';
-		AT.Insert(initialTreeVals[i]);
+		//we test the un-aware tree and not the aware tree
+		double durationSum = 0;
+		UnawareBST UT;
+		for (int i = 0; i < NUM_NODES; i++)
+		{
+			//generate val to insert, then start the time
+			int val = rand() % NUM_NODES;
+			auto start = high_resolution_clock::now(); //start time
+
+			//insert val
+			UT.Insert(val);
+			auto stop = high_resolution_clock::now(); //stop time
+			auto duration = duration_cast<microseconds>(stop - start); //1 second is 1,000,000 microseconds (654,773 microseconds is .654 seconds)
+			durationSum += duration.count();
+		}
+		std::cout << "Time to create Un-aware tree without the use of vectors in main: " << durationSum / 1000000 << " seconds\n\n";
 	}
-	for (int i = 0; i < ID_PAIRS; i++)
-	{
-		if (i % 100 == 0)
-			cout << i << '\n';
-		//delete first, then insert
-		AT.Delete(DeleteVals[i]);
-		AT.Insert(InsertVals[i]);
-	}
-
-	auto stop_AT = high_resolution_clock::now(); //stop time
-
-	// Subtract stop and start timepoints and 
-	// cast it to required unit. Predefined units 
-	// are nanoseconds, microseconds, milliseconds, 
-	// seconds, minutes, hours. Use duration_cast() 
-	// function. 
-	auto duration_AT = duration_cast<microseconds>(stop_AT - start_AT);
-
-	// To get the value of duration use the count() 
-	// member function on the duration object 
-	cout << "Time for Single-Vector, Aware tree: " << duration_AT.count() << "microseconds\n";
-#endif // Debug
+#endif // TIME_TEST_NO_VECS
 
 }
