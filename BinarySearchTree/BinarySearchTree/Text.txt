@@ -1,3 +1,52 @@
- 1112808000 AT Time
- 724874 UT Time
- The Aware Tree took 1535 times as long as the UT Tree!
+**************************************************************************************
+********* Findings for an Aware-Tree with only a single memory-unit ******************
+**************************************************************************************
+
+Number of nodes for these trees: 2
+Average time for Unaware tree over 10 iterations: 143548 microseconds
+Average time for Aware tree over 10 iterations: 30042.1 microseconds	79.1% increase
+
+Number of nodes for these trees: 4
+Average time for Unaware tree over 10 iterations: 112340 microseconds
+Average time for Aware tree over 10 iterations: 41816.1 microseconds	62.8% increase
+
+Number of nodes for these trees: 8
+Average time for Unaware tree over 10 iterations: 135841 microseconds
+Average time for Aware tree over 10 iterations: 72786.7 microseconds	46.5% increase
+
+Number of nodes for these trees: 16
+Average time for Unaware tree over 10 iterations: 153107 microseconds
+Average time for Aware tree over 10 iterations: 92268.2 microseconds	39.8% increase
+
+Number of nodes for these trees: 32
+Average time for Unaware tree over 10 iterations: 180402 microseconds
+Average time for Aware tree over 10 iterations: 115155 microseconds		36.2 % increase
+
+Number of nodes for these trees: 64
+Average time for Unaware tree over 10 iterations: 203387 microseconds
+Average time for Aware tree over 10 iterations: 137852 microseconds		32.2% increase
+
+Number of nodes for these trees: 128
+Average time for Unaware tree over 10 iterations: 210433 microseconds
+Average time for Aware tree over 10 iterations: 151074 microseconds		28.2% increase
+
+Number of nodes for these trees: 256
+Average time for Unaware tree over 10 iterations: 226164 microseconds
+Average time for Aware tree over 10 iterations: 170699 microseconds		24.5% increase
+
+Number of nodes for these trees: 512
+Average time for Unaware tree over 10 iterations: 257583 microseconds
+Average time for Aware tree over 10 iterations: 192867 microseconds		25.1% increase
+
+Number of nodes for these trees: 1024
+Average time for Unaware tree over 10 iterations: 264654 microseconds
+Average time for Aware tree over 10 iterations: 211641 microseconds		20.0% increase
+
+Number of nodes for these trees: 2048
+Average time for Unaware tree over 10 iterations: 295230 microseconds
+Average time for Aware tree over 10 iterations: 233473 microseconds		20.9% increase
+
+Number of nodes for these trees: 4096
+Average time for Unaware tree over 10 iterations: 330578 microseconds
+Average time for Aware tree over 10 iterations: 278485 microseconds		15.8% increase
+

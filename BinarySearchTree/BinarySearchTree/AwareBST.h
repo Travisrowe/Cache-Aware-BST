@@ -9,10 +9,10 @@ class AwareBST
 	int freeIndex = 0; //the next index to insert into
 	int size = 0; //we can use size to update freeIndex more quickly
 	void AuxPrint(int);
-	void AuxInsert(int, int);
+	void AuxInsert(int&, int);
 	void AuxDelete(int&, int);
 	void DeleteNode(int);
-	void UpdateFreeIndex();
+	void UpdateFreeIndex(int);
 
 public:
 	AwareBST() = delete;

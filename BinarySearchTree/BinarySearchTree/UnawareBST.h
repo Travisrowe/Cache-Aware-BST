@@ -29,11 +29,8 @@ public:
 	void Insert(int v);//Insert v into the tree
 	void Delete(int val);//Delete val from the tree
 	int GetSize();
-	int Sum();//Return the sum of the values in the tree.
 	void Print();//Can you change this to have a parameter
 				 // Print(PREORDER), Print(INORDER) and Print(Postorder) ?
 				 // PREORDER etc enums
-	double IPL(); // recursive function to find the actual IPL of the tree
-	int SimpsonIPL(void);
 };
 

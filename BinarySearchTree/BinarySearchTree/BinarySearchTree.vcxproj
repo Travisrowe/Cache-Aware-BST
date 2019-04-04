@@ -118,16 +118,23 @@
     <ClCompile Include="AwareBST.cpp" />
     <ClCompile Include="ANode.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MANode.cpp" />
+    <ClCompile Include="MemoryUnitTuple.cpp" />
+    <ClCompile Include="Multi_AwareBST.cpp" />
     <ClCompile Include="UnawareBST.cpp" />
     <ClCompile Include="UNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AwareBST.h" />
     <ClInclude Include="ANode.h" />
+    <ClInclude Include="MANode.h" />
+    <ClInclude Include="MemoryUnitTuple.h" />
+    <ClInclude Include="Multi_AwareBST.h" />
     <ClInclude Include="UnawareBST.h" />
     <ClInclude Include="UNode.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="README.txt" />
     <Text Include="Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

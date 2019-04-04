@@ -1,0 +1,9 @@
+﻿  AwareBST.cpp
+c:\users\travis\documents\school_related\cache-aware-bst\binarysearchtree\binarysearchtree\awarebst.cpp(22): warning C4806: '==': unsafe operation: no value of type 'bool' promoted to type 'int' can equal the given constant
+  Main.cpp
+  Generating code
+  Finished generating code
+  6 of 157 functions ( 3.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
+  BinarySearchTree.vcxproj -> C:\Users\Travis\Documents\School_Related\Cache-Aware-BST\BinarySearchTree\x64\Release\BinarySearchTree.exe

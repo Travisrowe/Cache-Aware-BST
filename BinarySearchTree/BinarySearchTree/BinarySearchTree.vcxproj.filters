@@ -30,6 +30,15 @@
     <ClCompile Include="ANode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MANode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Multi_AwareBST.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryUnitTuple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UnawareBST.h">
@@ -44,8 +53,20 @@
     <ClInclude Include="ANode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MANode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Multi_AwareBST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryUnitTuple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />
+    <Text Include="README.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
